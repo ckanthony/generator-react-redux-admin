@@ -2,13 +2,15 @@ const Generator = require('yeoman-generator');
 const path = require('path');
 const esprima = require('esprima');
 const fs = require('fs');
+const _ = require('lodash');
 
 module.exports = class AppGenerator extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
     this.props = {
-      name: ''
+      name: '',
+      urlPath: '',
     }
   }
 
@@ -16,8 +18,12 @@ module.exports = class AppGenerator extends Generator {
   prompting () {
     const prompts = [{
       name: 'name',
-      message: 'Name of your service',
+      message: 'Name of your service (campaign-step)',
       when: !this.options.name
+    }, {
+      name: 'urlPath',
+      message: 'URL Path for your service api (eg. regions)',
+      when: !this.options.urlPath
     }];
 
     return this.prompt(prompts).then(props => {
@@ -28,6 +34,68 @@ module.exports = class AppGenerator extends Generator {
 
   writing () {
     const props = this.props;
+    // campaign_applications
+    const urlPath = this.props.urlPath
+    // CAMPAIGNAPPLICATION
+    const actionName = this.props.name.split('-').join('').toUpperCase()
+    // campaignApplication
+    const camelCasedName = _.camelCase(this.props.name)
+    // Campaign Application
+    const startCasedName = _.startCase(this.props.name)
+    // CampaignApplication
+    const capitalisedName = _.startCase(this.props.name).replace(/\s/g, '')
+    const context = {
+      urlPath,
+      actionName,
+      camelCasedName,
+      startCasedName,
+    }
+
+    // reducers
+    this.fs.copyTpl(
+      this.templatePath('reducers/itemForm.js'),
+      this.destinationPath(`src/reducers/${camelCasedName}Form.js`),
+      context
+    );
+    this.fs.copyTpl(
+      this.templatePath('reducers/itemList.js'),
+      this.destinationPath(`src/reducers/${camelCasedName}List.js`),
+      context
+    );
+    // actions
+    this.fs.copyTpl(
+      this.templatePath('actions/itemForm.js'),
+      this.destinationPath(`src/actions/${camelCasedName}Form.js`),
+      context
+    );
+    this.fs.copyTpl(
+      this.templatePath('actions/itemList.js'),
+      this.destinationPath(`src/actions/${camelCasedName}List.js`),
+      context
+    );
+    // containers
+    // form
+    this.fs.copyTpl(
+      this.templatePath('containers/ItemForm/Form.jsx'),
+      this.destinationPath(`src/containers/${capitalisedName}Form/Form.js`),
+      context
+    );
+    this.fs.copyTpl(
+      this.templatePath('containers/ItemForm/index.jsx'),
+      this.destinationPath(`src/containers/${capitalisedName}Form/index.js`),
+      context
+    );
+    // list
+    this.fs.copyTpl(
+      this.templatePath('containers/ItemList/Table.jsx'),
+      this.destinationPath(`src/containers/${capitalisedName}List/Table.js`),
+      context
+    );
+    this.fs.copyTpl(
+      this.templatePath('containers/ItemList/index.jsx'),
+      this.destinationPath(`src/containers/${capitalisedName}List/index.js`),
+      context
+    );
 
     const reducersJS = fs.readFileSync(this.destinationPath('', 'src/reducers/index.js'), 'utf8');
     const reducersAST = esprima.parseScript(reducersJS, { loc: true, tolerant: true });

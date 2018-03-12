@@ -1,31 +1,31 @@
 import {
-  REGIONLIST_FETCHITEMS_LOAD,
-  REGIONLIST_FETCHITEMS_SUCCEED,
-  REGIONLIST_FETCHITEMS_FAIL,
-  REGIONLIST_CHANGETABLE_CHANGE,
-  REGIONLIST_SEARCHTABLE_EDIT,
-  REGIONLIST_SEARCHTABLE_SEARCH,
+  <%= actionName %>LIST_FETCHITEMS_LOAD,
+  <%= actionName %>LIST_FETCHITEMS_SUCCEED,
+  <%= actionName %>LIST_FETCHITEMS_FAIL,
+  <%= actionName %>LIST_CHANGETABLE_CHANGE,
+  <%= actionName %>LIST_SEARCHTABLE_EDIT,
+  <%= actionName %>LIST_SEARCHTABLE_SEARCH,
 } from '../constants/actionTypes'
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case REGIONLIST_FETCHITEMS_LOAD:
+    case <%= actionName %>LIST_FETCHITEMS_LOAD:
       return { ...state, isFetchItemsLoading: true, fetchItemsError: null }
-    case REGIONLIST_FETCHITEMS_SUCCEED:
+    case <%= actionName %>LIST_FETCHITEMS_SUCCEED:
       return {
         ...state,
         isFetchItemsLoading: false,
         items: action.items,
         pagination: { ...state.pagination, total: action.total },
       }
-    case REGIONLIST_FETCHITEMS_FAIL:
+    case <%= actionName %>LIST_FETCHITEMS_FAIL:
       return {
         ...state,
         isFetchItemsLoading: false,
         items: null,
         fetchItemsError: action.fetchItemsError,
       }
-    case REGIONLIST_CHANGETABLE_CHANGE: {
+    case <%= actionName %>LIST_CHANGETABLE_CHANGE: {
       return {
         ...state,
         pagination: action.pagination,
@@ -33,12 +33,12 @@ export default (state = {}, action) => {
         sorter: action.sorter,
       }
     }
-    case REGIONLIST_SEARCHTABLE_EDIT:
+    case <%= actionName %>LIST_SEARCHTABLE_EDIT:
       return {
         ...state,
         search: action.search,
       }
-    case REGIONLIST_SEARCHTABLE_SEARCH:
+    case <%= actionName %>LIST_SEARCHTABLE_SEARCH:
       return {
         ...state,
         isSearching: action.isSearching,

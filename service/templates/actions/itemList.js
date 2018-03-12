@@ -3,12 +3,10 @@ import api from '../utils/api'
 
 const searchKeys = [
   'title',
-  'currency_code',
-  'currency_sign',
 ]
 
 export const fetchItems = (params = {}) => async (dispatch) => {
-  dispatch({ type: ActionTypes.<%= actionName =%>LIST_FETCHITEMS_LOAD })
+  dispatch({ type: ActionTypes.<%= actionName %>LIST_FETCHITEMS_LOAD })
   try {
     const {
       current = 1,
@@ -27,19 +25,19 @@ export const fetchItems = (params = {}) => async (dispatch) => {
       $sort,
     }
     $or && (query.$or = $or)
-    const result = await api.get(`${urlPath}`, query)
+    const result = await api.get('<%= urlPath %>', query)
     const {
       data: items,
       total,
     } = result
     dispatch({
-      type: ActionTypes.<%= actionName =%>LIST_FETCHITEMS_SUCCEED,
+      type: ActionTypes.<%= actionName %>LIST_FETCHITEMS_SUCCEED,
       items,
       total,
     })
   } catch (error) {
     dispatch({
-      type: ActionTypes.<%= actionName =%>LIST_FETCHITEMS_FAIL,
+      type: ActionTypes.<%= actionName %>LIST_FETCHITEMS_FAIL,
       fetchItemsError: error.message,
     })
   }
@@ -48,7 +46,7 @@ export const fetchItems = (params = {}) => async (dispatch) => {
 export const changeTable = params => (dispatch) => {
   const { pagination = {}, filters = {}, sorter = {} } = params
   dispatch({
-    type: ActionTypes.<%= actionName =%>LIST_CHANGETABLE_CHANGE,
+    type: ActionTypes.<%= actionName %>LIST_CHANGETABLE_CHANGE,
     pagination,
     filters,
     sorter,
@@ -57,7 +55,7 @@ export const changeTable = params => (dispatch) => {
 
 export const searchTable = ({ isSearching }) => (dispatch) => {
   dispatch({
-    type: ActionTypes.<%= actionName =%>LIST_SEARCHTABLE_SEARCH,
+    type: ActionTypes.<%= actionName %>LIST_SEARCHTABLE_SEARCH,
     isSearching,
   })
 }
@@ -65,7 +63,7 @@ export const searchTable = ({ isSearching }) => (dispatch) => {
 export const editSearch = params => (dispatch) => {
   const { search } = params
   dispatch({
-    type: ActionTypes.<%= actionName =%>LIST_SEARCHTABLE_EDIT,
+    type: ActionTypes.<%= actionName %>LIST_SEARCHTABLE_EDIT,
     search,
   })
 }

@@ -4,8 +4,8 @@ import { Layout, Menu, Icon } from 'antd'
 import { withRouter } from 'react-router-dom'
 import Header from './Header'
 import AppFooter from '../../components/AppFooter'
-import logoWhale from '../../assets/logo-whale.png'
-import logoText from '../../assets/logo-text.png'
+import menuLogo from '../../assets/logo-icon.png'
+// import logoText from '../../assets/logo-text.png'
 import { openChangeMenu, toggleSider } from '../../actions/admin'
 import './index.less'
 
@@ -40,8 +40,9 @@ class Admin extends React.Component {
           width={256}
         >
           <div className='logo'>
-            <img src={logoWhale} alt='Admin Portal' />
-            {!collapsed && <img className='text' src={logoText} alt='Admin Portal' />}
+            <img src={menuLogo} alt='Admin Portal' />
+            {/* {!collapsed && <img className='text' src={logoText} alt='Admin Portal' />} */}
+            {!collapsed && <h1>Admin</h1>}
           </div>
           <Menu
             className='menu'
@@ -52,23 +53,8 @@ class Admin extends React.Component {
             onClick={this.handleMenuItemOnClick}
             onOpenChange={this.props.handleMenuOnOpenChange}
           >
-            <Menu.Item key='campaigns'>
-              <Icon type='notification' /><span>Campaigns</span>
-            </Menu.Item>
-            <Menu.Item key='campaign_applications'>
-              <Icon type='solution' /><span>Applications</span>
-            </Menu.Item>
-            <Menu.Item key='users'>
-              <Icon type='user' /><span>Users</span>
-            </Menu.Item>
-            <Menu.Item key='user_payments'>
-              <Icon type='bank' /><span>Payments</span>
-            </Menu.Item>
-            <Menu.Item key='administrators'>
-              <Icon type='key' /><span>Administrators</span>
-            </Menu.Item>
-            <Menu.Item key='regions'>
-              <Icon type='global' /><span>Regions</span>
+            <Menu.Item key='dashboard'>
+              <Icon type='pie-chart' /><span>Dashboard</span>
             </Menu.Item>
           </Menu>
         </Sider>

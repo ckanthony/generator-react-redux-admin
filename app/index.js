@@ -15,52 +15,53 @@ module.exports = class AppGenerator extends Generator {
     };
 
     this.dependencies = [
-      'antd',
-      'moment',
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router-dom',
-      'redux',
-      'redux-thunk'
-    ];
+      "antd@^3.2.1",
+      "moment@^2.21.0",
+      "react@^16.2.0",
+      "react-dom@^16.2.0",
+      "react-redux@^5.0.5",
+      "react-router-dom@^4.2.2",
+      "redux@^3.7.2",
+      "redux-thunk@^2.2.0"
+    ]
 
     this.devDependencies = [
-      'babel-core',
-      'babel-eslint',
-      'babel-loader',
-      'babel-plugin-import',
-      'babel-plugin-transform-class-properties',
-      'babel-plugin-transform-object-rest-spread',
-      'babel-plugin-transform-runtime',
-      'babel-preset-env',
-      'babel-preset-react',
-      'babel-runtime',
-      'case-sensitive-paths-webpack-plugin',
-      'clean-webpack-plugin',
-      'copy-webpack-plugin',
-      'css-loader',
-      'eslint',
-      'eslint-config-airbnb',
-      'eslint-plugin-import',
-      'eslint-plugin-jsx-a11y',
-      'eslint-plugin-react',
-      'extract-text-webpack-plugin',
-      'file-loader',
-      'html-webpack-plugin',
-      'less',
-      'less-loader',
-      'react-dev-utils',
-      'react-hot-loader',
-      'redux-immutable-state-invariant',
-      'redux-logger',
-      'style-loader',
-      'url-loader',
-      'webpack',
-      'webpack-cleanup-plugin',
-      'webpack-dev-server',
-      'webpack-merge',
-    ];
+      "babel-core@^6.23.1",
+      "babel-eslint@^8.2.1",
+      "babel-loader@^7.1",
+      "babel-plugin-import@^1.6.3",
+      "babel-plugin-transform-class-properties@^6.24.1",
+      "babel-plugin-transform-object-rest-spread@^6.26.0",
+      "babel-plugin-transform-runtime@^6.23.0",
+      "babel-preset-env@^1.6.0",
+      "babel-preset-react@^6.23.0",
+      "babel-runtime@^6.22.0",
+      "case-sensitive-paths-webpack-plugin@^2.1.1",
+      "clean-webpack-plugin@^0.1.18",
+      "copy-webpack-plugin@^4.4.1",
+      "css-loader@^0.28.9",
+      "eslint@^4.9.0",
+      "eslint-config-airbnb@^16.1.0",
+      "eslint-plugin-import@^2.7.0",
+      "eslint-plugin-jsx-a11y@^6.0.2",
+      "eslint-plugin-react@^7.4.0",
+      "extract-text-webpack-plugin@^3.0.2",
+      "file-loader@^1.1.9",
+      "html-webpack-plugin@^2.26.0",
+      "less@2.7.2",
+      "less-loader@^4.0.5",
+      "react-dev-utils@^5.0.0",
+      "react-hot-loader@^3.0.0-beta.6",
+      "redux-immutable-state-invariant@^2.1.0",
+      "redux-logger@^3.0.6",
+      "style-loader@^0.20.1",
+      "url-loader@0.5.7",
+      "webpack@^3.3.0",
+      "webpack-cleanup-plugin@^0.4.2",
+      "webpack-dev-server@^2.4.1",
+      "webpack-merge@^4.1.1"
+    ]
+    
   }
 
   prompting () {
@@ -106,12 +107,16 @@ module.exports = class AppGenerator extends Generator {
   writing () {
     const props = this.props;
     const pkg = this.pkg = require(this.templatePath('package.json.js'))(this);
-
     this.fs.copy(this.templatePath('src'), this.destinationPath('src'));
-    this.fs.copy(this.templatePath('_gitignore'), this.destinationPath('', '.gitignore'));
+    this.fs.copy(this.templatePath('_babelrc'), this.destinationPath('', '.babelrc'));
     this.fs.copy(this.templatePath('_dockerignore'), this.destinationPath('', '.dockerignore'));
     this.fs.copy(this.templatePath('_eslintignore'), this.destinationPath('', '.eslintignore'));
+    this.fs.copy(this.templatePath('_eslintrc'), this.destinationPath('', '.eslintrc'));
+    this.fs.copy(this.templatePath('_gitignore'), this.destinationPath('', '.gitignore'));
     this.fs.copy(this.templatePath('Dockerfile'), this.destinationPath('', 'Dockerfile'));
+    this.fs.copy(this.templatePath('webpack.config.common.js'), this.destinationPath('', 'webpack.config.common.js'));
+    this.fs.copy(this.templatePath('webpack.config.dev.js'), this.destinationPath('', 'webpack.config.dev.js'));
+    this.fs.copy(this.templatePath('webpack.config.prod.js'), this.destinationPath('', 'webpack.config.prod.js'));
     this.fs.copy(this.templatePath('public'), this.destinationPath('', 'public'));
     this.fs.copyTpl(
       this.templatePath('public/index.html'),

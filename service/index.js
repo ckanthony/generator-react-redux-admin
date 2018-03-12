@@ -15,7 +15,7 @@ module.exports = class AppGenerator extends Generator {
 
   prompting () {
     const prompts = [{
-      name: 'Name',
+      name: 'name',
       message: 'Name of your service',
       when: !this.options.name
     }];
@@ -30,21 +30,30 @@ module.exports = class AppGenerator extends Generator {
     const props = this.props;
 
     const reducersJS = fs.readFileSync(this.destinationPath('', 'src/reducers/index.js'), 'utf8');
-    var reducersAST = esprima.parseScript(reducersJS, { range: true, tolerant: true });
+    const reducersAST = esprima.parseScript(reducersJS, { loc: true, tolerant: true });
 
-    console.log(reducersAST.body.filter(ast => ast.type === 'ImportDeclaration'));
-    // this.fs.copy(this.templatePath('public'), this.destinationPath('', 'public'));
-    // this.fs.copyTpl(
-    //   this.templatePath('public/index.html'),
-    //   this.destinationPath('public/index.html'),
-    //   {
-    //     title: this.props.title
-    //   }
-    // );
-    // this.fs.writeJSON(
-    //   this.destinationPath('package.json'),
-    //   pkg
-    // );
+    const astImports = reducersAST.body.filter(ast => ast.type === 'ImportDeclaration');
+    const astReducers = reducersAST.body.filter(ast => ast.type === 'ExportDefaultDeclaration' && ast.declaration.callee.name === 'combineReducers');
+
+    if (astImports.find(ast => ast.source.value !== './'+props.name)) {
+      const data = reducersJS.split('\n');
+      // insert import statement
+      const astImport = astImports.pop();
+      const lineNumberImport = astImport.loc.end.line;
+      const importStatement = `import ${props.name} from './${props.name}'`;
+      data.splice(lineNumberImport, 0, importStatement);
+
+      // insert reducer name
+      const astReducer = astReducers[0].declaration.arguments[0].properties.pop();
+      const lineNumberReducer = astReducer.loc.end.line;
+      data.splice(lineNumberReducer + 1, 0, `  ${props.name},`);
+
+      const newReducerJS = data.join('\n');
+
+      fs.writeFile(this.destinationPath('', 'src/reducers/index.js'), newReducerJS, function (err) {
+        if (err) return console.log(err);
+      });
+    }
   }
 
   end() {

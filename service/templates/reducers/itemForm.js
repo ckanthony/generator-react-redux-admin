@@ -17,7 +17,7 @@ import {
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case REGIONFORM_FETCHITEM_LOAD:
+    case <%= name =%>_FETCHITEM_LOAD:
       return { ...state, isFetchItemLoading: true, fetchItemError: null }
     case REGIONFORM_FETCHITEM_SUCCEED:
       return { ...state, isFetchItemLoading: false, item: action.item }

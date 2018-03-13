@@ -35,15 +35,15 @@ module.exports = class AppGenerator extends Generator {
   writing () {
     const props = this.props;
     // campaign_applications
-    const urlPath = this.props.urlPath
+    const urlPath = props.urlPath
     // CAMPAIGNAPPLICATION
     const actionName = this.props.name.split('-').join('').toUpperCase()
     // campaignApplication
-    const camelCasedName = _.camelCase(this.props.name)
+    const camelCasedName = _.camelCase(props.name)
     // Campaign Application
-    const startCasedName = _.startCase(this.props.name)
+    const startCasedName = _.startCase(props.name)
     // CampaignApplication
-    const capitalisedName = _.startCase(this.props.name).replace(/\s/g, '')
+    const capitalisedName = _.startCase(props.name).replace(/\s/g, '')
     const context = {
       urlPath,
       actionName,
@@ -103,24 +103,28 @@ module.exports = class AppGenerator extends Generator {
     const astImports = reducersAST.body.filter(ast => ast.type === 'ImportDeclaration');
     const astReducers = reducersAST.body.filter(ast => ast.type === 'ExportDefaultDeclaration' && ast.declaration.callee.name === 'combineReducers');
 
-    if (astImports.find(ast => ast.source.value !== './'+props.name)) {
+    if (astImports.find(ast => ast.source.value !== './'+camelCasedName)) {
       const data = reducersJS.split('\n');
       // insert import statement
       const astImport = astImports.pop();
       const lineNumberImport = astImport.loc.end.line;
-      const importStatement = `import ${props.name} from './${props.name}'`;
+      const importStatement = `import ${camelCasedName} from './${camelCasedName}'`;
       data.splice(lineNumberImport, 0, importStatement);
 
       // insert reducer name
       const astReducer = astReducers[0].declaration.arguments[0].properties.pop();
       const lineNumberReducer = astReducer.loc.end.line;
-      data.splice(lineNumberReducer + 1, 0, `  ${props.name},`);
+      data.splice(lineNumberReducer + 1, 0, `  ${camelCasedName},`);
 
       const newReducerJS = data.join('\n');
 
       fs.writeFile(this.destinationPath('', 'src/reducers/index.js'), newReducerJS, function (err) {
         if (err) return console.log(err);
       });
+
+      let constants = this.fs.read(this.templatePath('constants'));
+      constants = constants.replace(/\${NAME}/g, actionName);
+      this.fs.append(this.destinationPath('src/constants/actionTypes.js'), constants);
     }
   }
 

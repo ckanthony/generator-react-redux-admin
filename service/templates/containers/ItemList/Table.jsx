@@ -1,14 +1,9 @@
 import React from 'react'
-import { Table, Modal, Avatar } from 'antd'
+import { Table } from 'antd'
 import { TableRowEditButton } from '../../components/AppButton'
 import FormattedDate from '../../components/FormattedDate'
-import ImagePreview from '../../components/ImagePreview'
 
 class ItemListTable extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-  }
-
   render() {
     const columns = [
       {

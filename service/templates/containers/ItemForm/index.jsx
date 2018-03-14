@@ -17,7 +17,7 @@ import {
   reset,
 } from '../../actions/<%= camelCasedName %>Form'
 
-const listPath = '/admin/<%= camelCasedName %>s'
+const listPath = '/admin/<%= snakeCasedName %>s'
 const itemsTitle = '<%= startCasedName %>'
 const itemTitle = '<%= startCasedName %>'
 const storeKey = '<%= camelCasedName %>Form'

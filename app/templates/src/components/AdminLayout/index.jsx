@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Icon } from 'antd'
 import { withRouter } from 'react-router-dom'
 import Header from './Header'
+import Menu from './Menu'
 import AppFooter from '../../components/AppFooter'
 import menuLogo from '../../assets/logo-icon.png'
 // import logoText from '../../assets/logo-text.png'
@@ -10,7 +11,6 @@ import { openChangeMenu, toggleSider } from '../../actions/admin'
 import './index.less'
 
 const { Sider, Content } = Layout
-// const { SubMenu } = Menu
 
 class Admin extends React.Component {
   constructor(props, context) {
@@ -52,11 +52,7 @@ class Admin extends React.Component {
             selectedKeys={[selectedKey]}
             onClick={this.handleMenuItemOnClick}
             onOpenChange={this.props.handleMenuOnOpenChange}
-          >
-            <Menu.Item key='dashboard'>
-              <Icon type='pie-chart' /><span>Dashboard</span>
-            </Menu.Item>
-          </Menu>
+          />
         </Sider>
         <Layout>
           <Header collapsed={collapsed} handleHeaderOnToggle={this.props.handleHeaderOnToggle} />

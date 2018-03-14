@@ -14,15 +14,13 @@ import {
   searchTable,
   editSearch,
 } from '../../actions/<%= camelCasedName %>List'
-import {
-  LIST_PAGESIZE,
-} from '../../constants/app'
+import { LIST_PAGESIZE } from '../../constants/app'
 
 const { Search } = Input
 const pageTitle = '<%= startCasedName %>'
 const storeKey = '<%= camelCasedName %>List'
-const createPath = '/admin/<%= camelCasedName %>s/create'
-const editPath = '/admin/<%= camelCasedName %>s/edit'
+const createPath = '/admin/<%= snakeCasedName %>s/create'
+const editPath = '/admin/<%= snakeCasedName %>s/edit'
 
 class ItemList extends React.Component {
   constructor(props, context) {

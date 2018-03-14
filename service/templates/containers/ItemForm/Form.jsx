@@ -1,6 +1,5 @@
 import React from 'react'
 import { Form, Input, Button, Modal, InputNumber } from 'antd'
-import ImageUpload from '../../components/ImageUpload'
 import { keys } from '../../actions/<%= camelCasedName %>Form'
 
 const FormItem = Form.Item

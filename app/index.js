@@ -1,6 +1,7 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
 const { kebabCase } = require('lodash');
+const _ = require('lodash');
 
 module.exports = class AppGenerator extends Generator {
   constructor (args, opts) {
@@ -8,8 +9,9 @@ module.exports = class AppGenerator extends Generator {
 
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
+    const name = this.pkg.name || process.cwd().split(path.sep).pop()
     this.props = {
-      name: this.pkg.name || process.cwd().split(path.sep).pop(),
+      name,
       description: this.pkg.description,
       src: this.pkg.directories && this.pkg.directories.lib
     };
@@ -108,21 +110,21 @@ module.exports = class AppGenerator extends Generator {
     const props = this.props;
     const pkg = this.pkg = require(this.templatePath('package.json.js'))(this);
     this.fs.copy(this.templatePath('src'), this.destinationPath('src'));
-    this.fs.copy(this.templatePath('_babelrc'), this.destinationPath('', '.babelrc'));
-    this.fs.copy(this.templatePath('_dockerignore'), this.destinationPath('', '.dockerignore'));
-    this.fs.copy(this.templatePath('_eslintignore'), this.destinationPath('', '.eslintignore'));
-    this.fs.copy(this.templatePath('_eslintrc'), this.destinationPath('', '.eslintrc'));
-    this.fs.copy(this.templatePath('_gitignore'), this.destinationPath('', '.gitignore'));
-    this.fs.copy(this.templatePath('Dockerfile'), this.destinationPath('', 'Dockerfile'));
-    this.fs.copy(this.templatePath('webpack.config.common.js'), this.destinationPath('', 'webpack.config.common.js'));
-    this.fs.copy(this.templatePath('webpack.config.dev.js'), this.destinationPath('', 'webpack.config.dev.js'));
-    this.fs.copy(this.templatePath('webpack.config.prod.js'), this.destinationPath('', 'webpack.config.prod.js'));
-    this.fs.copy(this.templatePath('public'), this.destinationPath('', 'public'));
+    this.fs.copy(this.templatePath('_babelrc'), this.destinationPath('.babelrc'));
+    this.fs.copy(this.templatePath('_dockerignore'), this.destinationPath('.dockerignore'));
+    this.fs.copy(this.templatePath('_eslintignore'), this.destinationPath('.eslintignore'));
+    this.fs.copy(this.templatePath('_eslintrc'), this.destinationPath('.eslintrc'));
+    this.fs.copy(this.templatePath('_gitignore'), this.destinationPath('.gitignore'));
+    this.fs.copy(this.templatePath('Dockerfile'), this.destinationPath('Dockerfile'));
+    this.fs.copy(this.templatePath('webpack.config.common.js'), this.destinationPath('webpack.config.common.js'));
+    this.fs.copy(this.templatePath('webpack.config.dev.js'), this.destinationPath('webpack.config.dev.js'));
+    this.fs.copy(this.templatePath('webpack.config.prod.js'), this.destinationPath('webpack.config.prod.js'));
+    this.fs.copy(this.templatePath('public'), this.destinationPath('public'));
     this.fs.copyTpl(
       this.templatePath('public/index.html'),
       this.destinationPath('public/index.html'),
       {
-        title: this.props.title
+        title: this.props.title || this.props.name
       }
     );
     this.fs.writeJSON(

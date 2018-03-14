@@ -1,9 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import PrivateRoute from '../../components/PrivateRoute'
 import Login from '../Login'
 import NotFound from '../NotFound'
 import Dashboard from '../Dashboard'
-import PrivateRoute from '../../components/PrivateRoute'
 import './index.less'
 
 export default class App extends React.Component {

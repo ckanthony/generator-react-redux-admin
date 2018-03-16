@@ -179,7 +179,7 @@ module.exports = class AppGenerator extends Generator {
       const menuItemAst = ast.body.find(node => node.type === 'ExportDefaultDeclaration').declaration.body.children.filter(node => node.type === 'JSXElement').slice(-1)[0]
       const menuItemAstLineNumber = menuItemAst.loc.start.line
       const urlPathName = `${snakeCasedName}s`
-      lines.splice(menuItemAstLineNumber, 0, `    <Menu.Item key='${urlPathName}'><Icon type='solution' /><span>${startCasedName}</span></Menu.Item>`);
+      lines.splice(menuItemAstLineNumber, 0, `    <Menu.Item key='${urlPathName}'><Icon type='solution' /><span>${startCasedName}s</span></Menu.Item>`);
       fs.writeFile(this.destinationPath(destinationPath), lines.join('\n'), function (err) {
         if (err) return console.log(err);
       });

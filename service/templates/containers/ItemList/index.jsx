@@ -17,7 +17,7 @@ import {
 import { LIST_PAGESIZE } from '../../constants/app'
 
 const { Search } = Input
-const pageTitle = '<%= startCasedName %>'
+const pageTitle = '<%= startCasedName %>s'
 const storeKey = '<%= camelCasedName %>List'
 const createPath = '/admin/<%= snakeCasedName %>s/create'
 const editPath = '/admin/<%= snakeCasedName %>s/edit'

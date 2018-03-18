@@ -1,4 +1,4 @@
-# generator-react-admin
+# generator-react-redux-admin
 
 > A Yeoman generator for antd-redux-admin from [react starter](https://github.com/bichenkk/react-starter) by [kk chen](https://github.com/bichenkk).
 
@@ -10,10 +10,10 @@ First you need install [yeoman](http://yeoman.io/).
 npm install -g yo
 ```
 
-Then install the feathers generator.
+Then install the generator.
 
 ```bash
-npm install -g yo generator-react-admin
+npm install -g yo generator-react-redux-admin
 
 ```
 
@@ -37,12 +37,12 @@ yo react-admin
 # short alias for generate new application
 yo react-admin
 
-# set up authentication
+# set up service ( a table, a route, menu item, and edit of each item )
 yo react-admin:service
 ```
 
 ## License
 
-Copyright (c) 2017
+Copyright (c) 2018
 
 Licensed under the [MIT license](LICENSE).

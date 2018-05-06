@@ -28,17 +28,17 @@ mkdir my-new-app; cd my-new-app/
 Generate your app and follow the prompts.
 
 ```bash
-yo react-admin
+yo react-redux-admin
 ```
 
 ## Available commands
 
 ```bash
 # short alias for generate new application
-yo react-admin
+yo react-redux-admin
 
 # set up service ( a table, a route, menu item, and edit of each item )
-yo react-admin:service
+yo react-redux-admin:service
 ```
 
 ## License
